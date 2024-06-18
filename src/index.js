@@ -11,6 +11,7 @@ import assetRoutes from "./routes/assetRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
+import orderRoutes from './routes/orderRoutes.js'
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use("/api", authRoutes);
 app.use("/api", assetRoutes);
 app.use("/api", profileRoutes);
 app.use("/api", cartRoutes);
+app.use('/api/order', orderRoutes)
 app.use("/api/payment", paymentRoutes);
 
 const options = {
