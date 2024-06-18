@@ -2,11 +2,11 @@ import CartModel from "../models/CartModel.js";
 
 export const addItemToCart = async (request, response) => {
 	const { user } = request;
-   const { assetId } = request.body;
+	const { assetId } = request.body;
 
 	const userCartExist = await CartModel.findOne({
 		creator: user._id,
-	}).populate("cartItems")
+	}).populate("cartItems");
 
 	if (!userCartExist) {
 		const newCart = new CartModel({
@@ -21,25 +21,22 @@ export const addItemToCart = async (request, response) => {
 			cart: newCart,
 		});
 	}
-   if (userCartExist) {
-      
+	if (userCartExist) {
 		const itemExistInCart = userCartExist?.cartItems.find(
 			(item) => item._id.toString() === assetId
 		);
 
 		if (itemExistInCart) {
-			return response
-				.status(400)
-				.json({ error: "Asset already in cart" });
-      }
+			return response.status(400).json({ error: "Asset already in cart" });
+		}
 
-      const updatedCart = await CartModel.findOneAndUpdate(
-         { creator: user._id },
-         { $push: { cartItems: assetId } },
-         { new: true }
-      );
-      
-      return response.status(200).json({
+		const updatedCart = await CartModel.findOneAndUpdate(
+			{ creator: user._id },
+			{ $push: { cartItems: assetId } },
+			{ new: true }
+		);
+
+		return response.status(200).json({
 			message: "Asset added successfully",
 			cart: updatedCart,
 		});
