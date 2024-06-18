@@ -80,14 +80,14 @@ export const getAllAssets = async (request, response) => {
 						$options: "i",
 				  }
 				: "",
-		});
+		}).sort({createdAt: -1});
 
 		return response.status(200).json({
 			message: "Assets fetched successfully",
 			assets: assets,
 		});
 	} else {
-		const assets = await AssetModel.find();
+		const assets = await AssetModel.find().sort({createdAt: -1});
 
 		return response.status(200).json({
 			message: "Assets fetched successfully",

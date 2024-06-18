@@ -50,7 +50,9 @@ export const getUserCartItems = async (req, res) => {
 	);
 
 	if (!cart) {
-		return res.status(400).json({ error: "Cart is empty" });
+		return res
+			.status(400)
+			.json({ error: "Cart is empty", userCart: null, cartTotal: 0 });
 	}
 
 	let cartTotal = 0;
@@ -63,7 +65,7 @@ export const getUserCartItems = async (req, res) => {
 
 	return res.status(200).json({
 		message: "Cart fetched successfully",
-		carts: cart,
+		userCart: cart,
 		cartTotal: cartTotal,
 	});
 };
